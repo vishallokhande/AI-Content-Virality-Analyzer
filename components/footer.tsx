@@ -10,8 +10,9 @@ export function Footer() {
       <div className="container mx-auto px-6 py-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Copyright */}
-          <div className="text-sm text-muted-foreground">
-            © {currentYear} 8x Template. All rights reserved.
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <span className="gradient-text font-bold text-base">ViralScore</span>
+            <span>© {currentYear} · AI Content Virality Analyzer</span>
           </div>
 
           {/* Links */}

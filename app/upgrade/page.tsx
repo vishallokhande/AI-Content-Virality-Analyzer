@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
-import { CheckCircle, Sparkles, Zap, Shield } from "lucide-react"
+import { CheckCircle, Zap, BarChart3, Hash, Music, Target, MessageSquare, TrendingUp } from "lucide-react"
 import { useSubscription } from "@/contexts/subscription-context"
 import { useAuth } from "@/contexts/auth-context"
 import { toast } from "sonner"
@@ -74,7 +74,7 @@ export default function UpgradePage() {
                 <div>
                   <div className="text-sm text-primary font-medium mb-1">Current Plan</div>
                   <div className="text-2xl font-bold flex items-center gap-2">
-                    <Sparkles className="w-5 h-5" />
+                    <Zap className="w-5 h-5" />
                     Pro Plan
                   </div>
                 </div>
@@ -144,26 +144,27 @@ export default function UpgradePage() {
             {/* Free Plan */}
             <div className="border border-border rounded-2xl p-8 bg-card/50">
               <div className="mb-6">
-                <h3 className="text-lg font-medium text-muted-foreground mb-2">Free</h3>
+                <h3 className="text-lg font-medium text-muted-foreground mb-2">Creator</h3>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-bold">$0</span>
                   <span className="text-muted-foreground">/month</span>
                 </div>
+                <p className="text-sm text-muted-foreground mt-1">Perfect to get started</p>
               </div>
 
               <ul className="space-y-3 mb-8">
-                <li className="flex items-center gap-3 text-muted-foreground">
-                  <CheckCircle className="w-5 h-5 text-muted-foreground/50" />
-                  Basic features
-                </li>
-                <li className="flex items-center gap-3 text-muted-foreground">
-                  <CheckCircle className="w-5 h-5 text-muted-foreground/50" />
-                  Limited usage
-                </li>
-                <li className="flex items-center gap-3 text-muted-foreground">
-                  <CheckCircle className="w-5 h-5 text-muted-foreground/50" />
-                  Community support
-                </li>
+                {[
+                  "5 analyses per month",
+                  "Basic virality score",
+                  "Hook strength analysis",
+                  "Caption suggestions",
+                  "6 hashtag recommendations",
+                ].map((f) => (
+                  <li key={f} className="flex items-center gap-3 text-muted-foreground">
+                    <CheckCircle className="w-5 h-5 text-muted-foreground/50 flex-shrink-0" />
+                    {f}
+                  </li>
+                ))}
               </ul>
 
               <Button variant="outline" className="w-full" disabled>
@@ -173,38 +174,41 @@ export default function UpgradePage() {
 
             {/* Pro Plan */}
             <div className="relative border-2 border-primary rounded-2xl p-8 bg-card/50">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
-                Recommended
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 gradient-primary text-white px-4 py-1 rounded-full text-sm font-medium">
+                Most Popular
               </div>
 
               <div className="mb-6">
                 <h3 className="text-lg font-medium text-primary mb-2 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" />
-                  Pro
+                  <Zap className="w-4 h-4" />
+                  Pro Creator
                 </h3>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold">$9.99</span>
+                  <span className="text-4xl font-bold">$19</span>
                   <span className="text-muted-foreground">/month</span>
                 </div>
+                <p className="text-sm text-muted-foreground mt-1">For serious creators</p>
               </div>
 
               <ul className="space-y-3 mb-8">
-                <li className="flex items-center gap-3">
-                  <Zap className="w-5 h-5 text-primary" />
-                  Unlimited access to all features
-                </li>
-                <li className="flex items-center gap-3">
-                  <Shield className="w-5 h-5 text-primary" />
-                  Priority support
-                </li>
-                <li className="flex items-center gap-3">
-                  <Sparkles className="w-5 h-5 text-primary" />
-                  Advanced analytics & insights
-                </li>
+                {[
+                  { icon: Zap, text: "Unlimited analyses" },
+                  { icon: BarChart3, text: "Full virality breakdown (50+ signals)" },
+                  { icon: MessageSquare, text: "AI caption rewriter" },
+                  { icon: Hash, text: "Trending hashtag intelligence" },
+                  { icon: Music, text: "Trending audio recommendations" },
+                  { icon: Target, text: "Competitor comparison" },
+                  { icon: TrendingUp, text: "Historical score tracking" },
+                ].map((f) => (
+                  <li key={f.text} className="flex items-center gap-3">
+                    <f.icon className="w-5 h-5 text-primary flex-shrink-0" />
+                    {f.text}
+                  </li>
+                ))}
               </ul>
 
               <Button
-                className="w-full"
+                className="w-full gradient-primary border-0 text-white"
                 size="lg"
                 onClick={handleUpgrade}
                 disabled={isProcessing || authLoading || subLoading}
