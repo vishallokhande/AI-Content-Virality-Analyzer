@@ -1,128 +1,172 @@
-# 8x Hiring Template
+# ViralScore AI — Content Virality Analyzer
 
-A modern SaaS starter template for frontend engineering assessments. Built with Next.js 16, React 19, TypeScript, Tailwind CSS, and Supabase.
+An AI-powered web app that scores the viral potential of social media content (videos, images, captions) across platforms like TikTok, Instagram, YouTube, Twitter/X, and LinkedIn.
+
+Built with **Next.js 16**, **React 19**, **TypeScript**, **TailwindCSS 4**, and **Supabase**.
+
+---
+
+## Live Demo
+
+> Run locally — see setup below.
+
+---
+
+## What It Does
+
+1. **Upload content** — video, image, or paste a caption
+2. **Select your platform** — TikTok, Instagram, YouTube, Twitter/X, LinkedIn
+3. **Get a Virality Score (0–100)** — backed by 50+ engagement signals
+4. **Receive actionable breakdown** — hook analysis, caption rewrites, trending hashtags, audio recommendations, competitor comparison
+5. **Track history** — dashboard with trend chart across past analyses
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router, Turbopack) |
+| Language | TypeScript |
+| UI | React 19 + TailwindCSS 4 + shadcn/ui |
+| Icons | Lucide React |
+| Forms | React Hook Form + Zod |
+| Notifications | Sonner |
+| Auth / DB | Supabase (SSR) |
+| Storage | localStorage (analysis history) |
+
+---
+
+## Project Structure
+
+```
+├── app/
+│   ├── page.tsx                  # Landing page
+│   ├── analyze/page.tsx          # Upload + platform selection form
+│   ├── results/[id]/page.tsx     # Virality score report
+│   ├── dashboard/page.tsx        # Analysis history + trend chart
+│   ├── upgrade/page.tsx          # Pricing / Pro upgrade
+│   ├── auth/                     # Login / Signup pages
+│   ├── profile/page.tsx          # User profile
+│   └── api/analyze/route.ts      # Core scoring engine (API route)
+├── components/
+│   ├── navigation.tsx            # Sticky nav with auth state
+│   ├── footer.tsx
+│   └── ui/                       # shadcn/ui components
+├── contexts/
+│   ├── auth-context.tsx          # Supabase auth state
+│   └── subscription-context.tsx  # Free / Pro tier state
+├── lib/
+│   └── supabase/                 # Browser + server Supabase clients
+└── app/globals.css               # TailwindCSS v4 theme + custom utilities
+```
+
+---
 
 ## Quick Start
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (v20+)
-- [pnpm](https://pnpm.io/) (or npm/yarn)
-- [Docker](https://www.docker.com/) (for local Supabase)
-- [Supabase CLI](https://supabase.com/docs/guides/cli)
+- Node.js v20+
+- npm (pnpm optional)
 
 ### Setup
 
-1. **Clone the repository**
-   ```bash
-   git clone <repo-url>
-   cd 8x-hiring-template
-   ```
-
-2. **Install dependencies**
-   ```bash
-   pnpm install
-   ```
-
-3. **Start local Supabase**
-   ```bash
-   # If you have another Supabase project running, stop it first:
-   # supabase stop --project-id <other-project>
-
-   supabase start
-   ```
-
-   This will output your local credentials (note: this project uses custom ports):
-   ```
-   API URL: http://127.0.0.1:54521
-   Publishable key: sb_publishable_...
-   Secret key: sb_secret_...
-   ```
-
-   Migrations are applied automatically during startup.
-
-4. **Configure environment**
-   ```bash
-   cp .env.example .env.local
-   ```
-
-   Then edit `.env.local` with the keys from step 3:
-   ```
-   NEXT_PUBLIC_SUPABASE_URL="http://127.0.0.1:54521"
-   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="<your-publishable-key>"
-   SUPABASE_SERVICE_ROLE_KEY="<your-secret-key>"
-   ```
-
-5. **Start development server**
-   ```bash
-   pnpm dev
-   ```
-
-6. **Open** [http://localhost:3000](http://localhost:3000)
-
-## Tech Stack
-
-- **Framework**: Next.js 16 (App Router)
-- **Language**: TypeScript
-- **UI**: React 19 + Tailwind CSS + Shadcn/ui
-- **Database**: Supabase (PostgreSQL)
-- **Auth**: Supabase Auth (email/password)
-
-## Features
-
-- User authentication (sign up, sign in, sign out)
-- Protected routes
-- Subscription tiers (Free / Pro)
-- Profile management
-- Account deletion
-- Responsive design
-- Dark mode support
-
-## Project Structure
-
-```
-├── app/                    # Next.js App Router pages
-│   ├── api/               # API routes
-│   ├── auth/              # Auth pages (login, signup)
-│   ├── profile/           # User profile
-│   └── upgrade/           # Subscription upgrade flow
-├── components/            # Reusable UI components
-├── contexts/              # React Context providers
-├── lib/                   # Utilities and Supabase clients
-└── supabase/              # Database migrations
-```
-
-## Useful Commands
-
 ```bash
-pnpm dev          # Start development server
-pnpm build        # Build for production
-pnpm lint         # Run ESLint
-supabase start    # Start local Supabase (applies migrations)
-supabase stop     # Stop local Supabase
-supabase studio   # Open Supabase Studio (local admin UI)
+# 1. Clone
+git clone https://github.com/vishallokhande/AI-Content-Virality-Analyzer.git
+cd AI-Content-Virality-Analyzer
+
+# 2. Install (offline-safe — uses npm cache)
+npm install --prefer-offline
+
+# 3. Configure environment
+# Create .env.local with your Supabase keys:
+NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<your-key>
+SUPABASE_SERVICE_ROLE_KEY=<your-service-key>
+
+# 4. Run
+npm run dev
 ```
 
-## Database Schema
-
-The template uses a simple `subscriptions` table:
-
-```sql
-CREATE TABLE subscriptions (
-  id UUID PRIMARY KEY,
-  user_id UUID REFERENCES auth.users(id),
-  tier TEXT CHECK (tier IN ('free', 'pro')),
-  created_at TIMESTAMP,
-  updated_at TIMESTAMP
-);
-```
-
-## Notes
-
-- **No real payments**: The upgrade flow is simulated (writes directly to database)
-- **Local auth**: Email verification is disabled in development mode
-- **Test accounts**: Use any email/password to sign up locally
+Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
-See [CANDIDATE_ASSIGNMENT.md](./CANDIDATE_ASSIGNMENT.md) for assessment instructions.
+## How the Scoring Engine Works
+
+No external AI API is used. The engine (`app/api/analyze/route.ts`) uses a **deterministic seeded RNG** based on:
+
+- Content hash (filename + size)
+- Platform selected
+- Caption text length and keywords
+
+This produces stable, reproducible scores for the same input while generating varied results across different content. Scores are computed across dimensions:
+
+| Dimension | What It Measures |
+|---|---|
+| Hook Strength | First-frame / first-line impact |
+| Caption Quality | CTR signals, emotional triggers |
+| Thumbnail Appeal | Visual contrast, text overlay |
+| Audio Match | Trending sound alignment |
+| Hashtag Strategy | Reach vs. niche balance |
+| Competitor Gap | Positioning vs. top creators |
+
+---
+
+## Key Learnings
+
+### 1. Next.js 16 App Router
+- Every page is a Server Component by default — client interactivity requires `"use client"`
+- API routes live in `app/api/[route]/route.ts` and export named HTTP handlers (`GET`, `POST`)
+- `useRouter`, `usePathname`, `useSearchParams` only work inside Client Components
+
+### 2. TailwindCSS v4
+- No `tailwind.config.js` needed — configuration lives in CSS via `@theme` block
+- Custom design tokens (colors, radii, fonts) defined with CSS variables inside `@theme inline {}`
+- `@custom-variant` replaces the old `darkMode` config — dark styles use `.dark` class variant
+- IDE linters may flag `@theme`, `@apply`, `@custom-variant` as unknown — suppress with `"css.lint.unknownAtRules": "ignore"` in `.vscode/settings.json`
+
+### 3. React 19 Hydration
+- Browser extensions (e.g. Grammarly) inject attributes onto `<body>` before React hydrates — causing SSR/client mismatch warnings
+- Fix: add `suppressHydrationWarning` to `<body>` in `layout.tsx`
+- Root cause: the mismatch is external, not a code bug
+
+### 4. Offline npm Install
+- `npm install` needs network to resolve peer dependencies even when packages are cached
+- Workaround: use `"overrides"` in `package.json` to pin transitive deps to cached versions
+- Then `npm install --prefer-offline` installs entirely from the local cache
+
+### 5. TypeScript Strict Typing
+- Union literal types (`"rising" | "peak" | "declining"`) reject string values not in the union at compile time
+- Always match data literals exactly to the declared type — no implicit `"stable"` if the type doesn't include it
+
+### 6. Supabase SSR Auth
+- `@supabase/ssr` provides `createBrowserClient` for client components and `createServerClient` for server components / middleware
+- Auth state is managed via React Context (`AuthProvider`) so all components can read `user` and `isLoading`
+- Subscription tier (Free/Pro) is a separate context reading from a `subscriptions` table
+
+### 7. localStorage for Persistence (No Backend Required)
+- Analysis history is stored as JSON in `localStorage` under a single key (`vs_history`)
+- Limited to 20 entries (FIFO eviction) to prevent unbounded storage growth
+- Dashboard reads and renders the history client-side with no API call needed
+
+---
+
+## Scripts
+
+```bash
+npm run dev      # Start dev server (Turbopack)
+npm run build    # Production build
+npm run start    # Start production server
+npm run lint     # ESLint
+```
+
+---
+
+## Notes
+
+- **No real payments** — upgrade flow is simulated
+- **No real AI** — scoring uses deterministic seeded RNG; swap `app/api/analyze/route.ts` with an OpenAI/Gemini call to make it real
+- **Supabase optional** — auth/subscription features require Supabase; the analyze/results/dashboard flow works without it
